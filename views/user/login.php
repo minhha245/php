@@ -7,7 +7,7 @@
     ]);
     $helper = $fb->getRedirectLoginHelper();
     $permissions = ['email']; // Optional permissions
-    $loginUrl = $helper->getLoginUrl('http://localhost/mvc_php/index.php?controller=user&action=loginViaFB', $permissions);
+    $loginUrl = $helper->getLoginUrl('http://localhost/php/index.php?controller=user&action=loginViaFB', $permissions);
 ?>
 <DOCTYPE html>
 <html>
