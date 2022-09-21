@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#Admin
+RewriteRule ^management/login$ index.php?controller=admin&action=login
+RewriteRule ^management/logout$ index.php?controller=admin&action=logout
+RewriteRule ^management/admin/search$ index.php?controller=admin&action=search

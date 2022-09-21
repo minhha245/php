@@ -1,0 +1,38 @@
+#login{
+    width: 250px;
+    margin: 200px auto;
+}
+
+label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type=submit]{
+    width: 170px;
+    height: 200px;
+    display: block;
+    margin: 10px 4px;
+    background-color:chartreuse;
+    
+}
+input[type=submit]:hover{
+    background-color: aqua;
+}
+form .input_space{
+    display: block;
+    margin-bottom: 20px;
+    width: 500px;
+}
+p.error_login{
+    margin-bottom: 15px;
+    text-align: center;
+}
+body {
+    background: linear-gradient(to bottom right,  rgb(50, 97, 199), rgb(167, 111, 196)); /* fallback for old browsers */
+    background: linear-gradient(to bottom right,  rgb(50, 97, 199), rgb(167, 111, 196));
+    background: linear-gradient(to right, rgb(50, 97, 199), rgb(167, 111, 196));
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;      
+  }

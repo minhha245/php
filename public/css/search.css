@@ -1,0 +1,69 @@
+a{
+    color: #000;
+    text-decoration: none;
+}
+
+/*======FORM SEARCH======*/
+#form_search, .alert, #data_table, p.error{
+    margin: 0px auto;
+    width: 960px;
+}
+
+#form_search{
+    border: 1px solid#000000;
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+#form_search form{
+    position: relative;
+    margin: 40px 50px;
+}
+
+#form_search input[type=text], input[type=email]{
+    position: absolute;
+    left: 100px;
+}
+
+#form_search input[type=submit]{
+    width: 70px;
+}
+
+#form_search #reset{
+    background: #ffb7ab;
+}
+
+#form_search #search{
+    color: #fff;
+    background: #5858d6;
+} 
+
+.alert{
+    background: #7bed9f;
+    padding: 10px;
+    margin-top: 50px;
+    display: none;
+}
+
+#data_table th, td{
+    text-align: center;
+}
+
+#data_table td{
+    height: 150px;
+}
+
+#data_table table tr td{
+    vertical-align: middle;
+}
+
+#data_table table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+#data_table table tr td a{
+    text-decoration: none;
+    color: #fff;
+}
