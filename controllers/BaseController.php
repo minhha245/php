@@ -30,7 +30,7 @@ class BaseController
         if ($page < $total_page) {
             $next = $page + 1;
         }
-        
+
         $arr = [
             'page' => $page,
             'total_page' => $total_page,

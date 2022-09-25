@@ -3,15 +3,15 @@ require_once "models/BaseModel.php";
 
 class UserModel extends BaseModel
 {
-    function __construct()
+    public function __construct()
     {
-         $this->tableName = 'user';
+        $this->tableName = 'user';
     }
 
     public function checkExistsEmailUser($str)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT `email` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}' AND `del_flag` =". DEL_FLAG_0);
+        $arr = $db->query("SELECT `email` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}' AND `del_flag` =" . DEL_FLAG_0);
         return $arr->rowCount();
     }
 

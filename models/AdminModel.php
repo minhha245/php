@@ -1,16 +1,16 @@
 <?php
 require_once "models/BaseModel.php";
 class AdminModel extends BaseModel
-{   
-    function __construct()
+{
+    public function __construct()
     {
-         $this->tableName = 'admin';
+        $this->tableName = 'admin';
     }
 
     public function checkExistsEmailAdmin($str)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT `email` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}' AND `del_flag` =". DEL_FLAG_0);
+        $arr = $db->query("SELECT `email` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}' AND `del_flag` =" . DEL_FLAG_0);
 
         return $arr->rowCount();
     }
@@ -26,16 +26,16 @@ class AdminModel extends BaseModel
     public function getRoleAdmin($email)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT `role_type` FROM `{$this->tableName}` WHERE `email` = '{$email}' AND `del_flag` =". DEL_FLAG_0);
+        $arr = $db->query("SELECT `role_type` FROM `{$this->tableName}` WHERE `email` = '{$email}' AND `del_flag` =" . DEL_FLAG_0);
 
         return $arr->fetch();
     }
-    
+
     public function getIdAdmin($str)
-    {   
+    {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT `id` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}'"); 
-        
+        $arr = $db->query("SELECT `id` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}'");
+
         return $arr->fetch();
     }
 }

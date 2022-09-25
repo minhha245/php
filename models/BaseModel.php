@@ -15,11 +15,11 @@ abstract class BaseModel implements DBInterface
     public function checkLogin($data)
     {
         $db = DB::getinstance();
-        $stmt = $db->prepare(" SELECT * FROM $this->tableName WHERE email = ? AND password = ? AND del_flag =".DEL_FLAG_0);
+        $stmt = $db->prepare(" SELECT * FROM $this->tableName WHERE email = ? AND password = ? AND del_flag =" . DEL_FLAG_0);
         $stmt->execute([$data['email'], $data['password']]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return (!empty($result)) ? $result :'';
+        return (!empty($result)) ? $result : '';
     }
 
     public function insert($data = array())
@@ -53,7 +53,7 @@ abstract class BaseModel implements DBInterface
         $sql = "UPDATE {$this->tableName} SET $sql WHERE $where";
         $result = $db->query($sql);
 
-        return (!empty($result)) ? $result :'';
+        return (!empty($result)) ? $result : '';
     }
 
     public function delete($where = "")
@@ -69,15 +69,15 @@ abstract class BaseModel implements DBInterface
     {
         $db = DB::getInstance();
         $result = $db->query("SELECT * FROM `{$this->tableName}` WHERE `email` LIKE '%{$data['email']}%' AND `name` LIKE '%{$data['name']}%' AND `del_flag` = '" . DEL_FLAG_0 . "' ORDER BY `{$data['column']}` {$data['getSort']} LIMIT {$data['start']}, {$data['record_per_page']}");
-        
+
         return $result->fetchAll();
     }
-   
+
     public function getSearchAll($data)
     {
         $db = DB::getInstance();
-        $result = $db->query("SELECT * FROM `{$this->tableName}` WHERE `email` LIKE '%{$data['email']}%' AND `name` LIKE '%{$data['name']}%' AND `del_flag` =". DEL_FLAG_0);
-        
+        $result = $db->query("SELECT * FROM `{$this->tableName}` WHERE `email` LIKE '%{$data['email']}%' AND `name` LIKE '%{$data['name']}%' AND `del_flag` =" . DEL_FLAG_0);
+
         return $result->rowCount();
     }
 }

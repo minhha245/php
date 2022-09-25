@@ -121,5 +121,3 @@ function checkConfirmPassword($password, $confirm_password)
 
     return $data;
 }
-
-

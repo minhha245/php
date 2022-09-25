@@ -17,7 +17,7 @@
             <ul id="main-menu">
                 <li>
                     <?php
-                        if(isset($_SESSION['admin']['role_type'])) {
+                        if(isset($_SESSION['admin'])) {
 
                             if($_SESSION['admin']['role_type'] == 1) {
                     ?>

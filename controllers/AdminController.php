@@ -7,12 +7,11 @@ class AdminController extends BaseController
     {
         $this->folder = "admin";
         $this->AdminModel = new AdminModel();
+
         if (isset($_SESSION['admin']['role_type']) && $_SESSION['admin']['role_type'] != 1) {
-            echo "<script>
-            alert('You can not access!')
-        </script>";
+
             header("Location: index.php?controller=user&action=search");
-           
+
         }
     }
 
@@ -36,7 +35,7 @@ class AdminController extends BaseController
 
             $email = $_POST['email'];
             $password = md5($_POST['password']);
-            $data=[
+            $data = [
                 'email' => $email,
                 'password' => $password,
             ];
@@ -44,7 +43,7 @@ class AdminController extends BaseController
             if (empty($error)) {
                 $admin = $this->AdminModel->checkLogin($data);
 
-                if ($admin!= null) {
+                if ($admin != null) {
                     $_SESSION['admin']['login'] = [
                         'is_login' => 1,
                         'email' => $email,
@@ -98,23 +97,23 @@ class AdminController extends BaseController
         }
 
         $column = isset($_GET['column']) ? $_GET['column'] : "id";
-        $add_url_pagging = $add_url_search."&column=" . $column . "&sort=" . $getSort;
+        $add_url_pagging = $add_url_search . "&column=" . $column . "&sort=" . $getSort;
         $value = [
             'email' => $email,
             'name' => $name,
         ];
         $total_record = $this->AdminModel->getSearchAll($value);
         $array = $this->pagging($total_record);
-        $value = array_merge($value, 
-        [
-            'column' => $column,
-            'getSort' => $getSort,
-            'start' => $array['start'],
-            'record_per_page' => RECORD_PER_PAGE,
-        ]);
+        $value = array_merge($value,
+            [
+                'column' => $column,
+                'getSort' => $getSort,
+                'start' => $array['start'],
+                'record_per_page' => RECORD_PER_PAGE,
+            ]);
 
         $data = $this->AdminModel->getInfoSearch($value);
-       
+
         if (empty($data)) {
             $data = NO_EXISTS_USER;
         }
@@ -194,9 +193,11 @@ class AdminController extends BaseController
                 if ($this->AdminModel->insert($arr)) {
                     move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
                     $_SESSION['admin']['upload'] = $upload_file;
-                    $data['alert-success'] = INSERT_SUCCESSFUL;
+                    $_SESSION['alert']['create-success'] = INSERT_SUCCESSFUL;
+                    header("Location: index.php?controller=admin&action=search");
                 } else {
-                    $data['alert-fail'] = INSERT_ERROR;
+                    $_SESSION['alert']['create-fail'] = INSERT_ERROR;
+                    header("Location: index.php?controller=admin&action=search");
                 }
             }
         }
@@ -236,8 +237,8 @@ class AdminController extends BaseController
             } else {
                 $avatar = $data['avatar'];
             }
-           
-            if ($name != $data['name'] ) {
+
+            if ($name != $data['name']) {
                 $error = array_merge($error, $validName);
             }
 
@@ -281,6 +282,7 @@ class AdminController extends BaseController
                     header("Location: index.php?controller=admin&action=search");
                 } else {
                     $_SESSION['alert']['update-fail'] = UPDATE_ERROR . " with ID = {$id}";
+                    header("Location: index.php?controller=admin&action=search");
                 }
             }
         }

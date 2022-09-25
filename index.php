@@ -3,7 +3,6 @@
     require_once "helpers/const.php";
     require_once "helpers/messages.php";
     require_once "helpers/fbconfig.php";
-    require_once "libraries/AllFunction.php";
     require_once "helpers/validate.php";
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 

@@ -31,6 +31,16 @@
 <!--            Data Table-->
             <div id="data_table">
                 <?php
+                    if(isset($_SESSION['alert']['create-success'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['create-success'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    if(isset($_SESSION['alert']['create-fail'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['create-fail'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
                     if(isset($_SESSION['alert']['update-success'])) {
                         echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-success'].'</p>';
                     } else {
@@ -43,6 +53,11 @@
                     }
                     if(isset($_SESSION['alert']['delete-success'])) {
                         echo '<p class="alert-success bg-green">'.$_SESSION['alert']['delete-success'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    if(isset($_SESSION['alert']['delete-fail'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['delete-fail'].'</p>';
                     } else {
                          echo ""; 
                     }

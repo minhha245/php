@@ -8,8 +8,7 @@
 <div id="wrapper-create">
     <h4>Admin - Create</h4>
     <form method="POST" action="" enctype="multipart/form-data">
-        <?php if(isset($data['alert-success'])) {echo "<p class='alert-success bg-green'>{$data['alert-success']}</p>"; }
-         if(isset($data['alert-fail'])) {echo "<p class='alert-success bg-green'>{$data['alert-fail']}</p>"; } ?>
+       
         <div id="wrapper-create-sub">
             <div id="wrapper-create-form">
                 <div class="form-group row">

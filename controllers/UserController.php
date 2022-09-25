@@ -34,7 +34,7 @@ class UserController extends BaseController
             $validEmail = validateEmail($email);
             $validPass = validatePassword($password);
             $checkConfirmPass = checkConfirmPassword($password, $confirm_password);
-            
+
             if (empty($_POST['email'])) {
                 $error['error-email'] = ERROR_EMPTY_EMAIL;
             }
@@ -116,13 +116,13 @@ class UserController extends BaseController
 
         header("Location: index.php?controller=user&action=search");
     }
-    
+
     // Users
     public function login()
     {
         $error = array();
         if (isset($_POST['login'])) {
-            
+
             if (empty($_POST['email'])) {
                 $error['error-empty-email'] = ERROR_EMPTY_EMAIL;
             }
@@ -179,7 +179,9 @@ class UserController extends BaseController
             exit;
         } catch (Facebook\Exceptions\FacebookSDKException $e) {
             // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            // echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            header("Location: index.php?controller=user&action=login");
+
             exit;
         }
 
