@@ -87,9 +87,9 @@ ul#sub-menu li a{
     display: block;
     text-align: center;
 }
-ul#sub-menu .nav-item:not(.active):hover{
+/* ul#sub-menu .nav-item:not(.active):hover{
     background-color: #15c933;
-}
+} */
 ul#sub-menu li:hover{
     background: cornflowerblue;
 }
@@ -141,6 +141,6 @@ img{
     width: 100px;
     height: 100px;
 }
- .active{
-    background: #15c933;
+.active{
+    background-color: #15c933;
 }

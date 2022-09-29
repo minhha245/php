@@ -47,7 +47,7 @@
                          echo ""; 
                     }
                     if(isset($_SESSION['alert']['update-fail'])) {
-                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-success'].'</p>';
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-fail'].'</p>';
                     } else {
                          echo ""; 
                     }
@@ -65,11 +65,11 @@
                 ?>
                 <table class="table table-striped table-hover table-condensed">
                     <tr>
-                        <th>ID<a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=id&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
+                        <th><a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=id&sort=' . $sort; ?>">ID <i class="fas fa-sort"></i></a></th>
                         <th>Avatar</th>
-                        <th>Name<a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=name&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
-                        <th>Email<a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=email&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
-                        <th>Role<a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=role_type&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
+                        <th><a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=name&sort=' . $sort; ?>">Name <i class="fas fa-sort"></i></a></th>
+                        <th><a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=email&sort=' . $sort; ?>">Email <i class="fas fa-sort"></i></a></th>
+                        <th><a href="index.php?controller=admin&action=search<?php echo $add_url_search . '&column=role_type&sort=' . $sort; ?>">Role <i class="fas fa-sort"></i></a></th>
                         <th>Action</th>
                     </tr>
                     <tr>
@@ -81,7 +81,8 @@
                                     <td><img src="<?php echo UPLOADS_ADMIN.$value['avatar']; ?>"></td>
                                     <td><?php echo $value['name'] ?></td>
                                     <td><?php echo $value['email'] ?></td>
-                                    <td><?php echo($value['role_type']==ROLE_TYPE_SUPERADMIN) ? 'Superadmin':'Admin';?><td>
+                                    <td><?php echo($value['role_type']==ROLE_TYPE_SUPERADMIN) ? 'Superadmin':'Admin';?></td>
+                                    <td>
                                         <span class="btn btn-danger"><a href="index.php?controller=admin&action=edit&id=<?php echo $value['id']?>">Edit</a></span>
                                         <span class="btn btn-success"><a href="index.php?controller=admin&action=delete&id=<?php echo $value['id'] ?>" onclick="return confirm('Are you sure?')";>Delete</a></span>
                                     </td>

@@ -16,6 +16,14 @@ h4{
     margin: 40px 50px;
 }
 
+.erro{
+    margin-right: 30px;
+}
+#wrapper-create-form p{
+    margin:0px 170px;
+    margin-bottom: 10px;
+    margin-top: -18px;
+}
 #form-create form input:not(input[type=radio], input[type=submit]), #role{
     position: absolute;
     left: 350px;

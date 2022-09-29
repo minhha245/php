@@ -13,6 +13,31 @@ class BaseController
             header("Location: index.php?controller=admin&action=error");
         }
     }
+    public function uploadImg($target_dir)
+    {
+        $error = [];
+        $flag = true;
+        $target_file = $target_dir . basename($_FILES['avatar']['name']);
+        $imgFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if (($_FILES['avatar']['name']) == '') {
+            $error['file_blank'] = 'file blank';
+            $flag = false;
+        }
+
+        $allowType = ['jpg', 'png', 'jpeg', 'gif'];
+
+        if (!in_array($imgFileType, $allowType)) {
+            $error['file_format'] = "File is not in the correct format ";
+            $flag = false;
+        }
+
+        if ($flag) {
+            return $target_file;
+        }
+
+        return $error;
+    }
 
     public function pagging($total_record)
     {

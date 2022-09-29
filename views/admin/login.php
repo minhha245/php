@@ -11,6 +11,11 @@
        
     </head>
     <body>
+    <?php
+                        if(isset($_SESSION['admin']['login'])) {
+                            header("Location: index.php?controller=admin&action=search");
+                        }
+                    ?>
         <div id="login">
             <form method="POST" action="">
                 <h2 style="text-align: center">Login Admin</h2>

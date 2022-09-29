@@ -7,8 +7,8 @@ define('DELETE_SUCCESSFUL', 'Delete data successful!');
 define('LOGIN_FB_SUCCESSFUL', 'Login with Facebook successful!');
 
 define('INSERT_ERROR', 'Create data failed!');
-define('UPDATE_ERROR', 'Update data failed!');
-define('DELETE_ERROR', 'Delete data failed!');
+define('UPDATE_ERROR', 'Data not found!');
+define('DELETE_ERROR', 'Data not found!');
 define('LOGIN_FB_ERROR', 'Login with Facebook failed!');
 
 //=====MESSAGES ERROR EMPTY=====
@@ -20,13 +20,13 @@ define('ERROR_EMPTY_CONFIRM_PASSWORD', 'Confirm password is not blank!');
 
 //=====MESSAGES ERROR VALIDATE=====
 define('ERROR_VALID_AVATAR', 'Avatar invalidate!');
-define('ERROR_VALID_EMAIL', 'Email invalidate!');
+define('ERROR_VALID_EMAIL', 'Email invalidate(example@example.com)!');
 define('ERROR_VALID_NAME', 'Name invalidate!');
-define('ERROR_VALID_PASSWORD', 'Password invalidate!');
+define('ERROR_VALID_PASSWORD', 'Must contain 6-8 character');
 
 define('ERROR_LENGTH_NAME', 'Name with a length of 3-50 characters');
 define('ERROR_LENGTH_EMAIL', 'Email with a length of 3-50 characters');
-define('ERROR_LENGTH_PASSWORD', 'Password with a length of 3-100 characters!');
+define('ERROR_LENGTH_PASSWORD', 'Password with a length of 6-8 characters!');
 
 //=====MESSAGES ERROR LOGIN=====
 define('ERROR_LOGIN', 'Login information is incorrect !');

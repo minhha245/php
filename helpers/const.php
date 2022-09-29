@@ -12,6 +12,8 @@ define('ROLE_TYPE_ADMIN', 2);
 define('ROLE_TYPE_SUPERADMIN', 1);
 define('DEL_FLAG_0', 0);
 define('DEL_FLAG_1', 1);
+define('STATUS_ACTIVED',1);
+define('STATUS_BANNER',2);
 
 //=====PAGGING=====
 define("RECORD_PER_PAGE", 5);

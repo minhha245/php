@@ -17,8 +17,8 @@ function validateEmail($email)
 function validatePassword($password)
 {
     $data = array();
-    //$pattern = "/^([\w_\.!@#$%^&*()-]+)$/";
-    $pattern = "/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{3,100}$/";
+    $pattern = "/^([\w_\.!@#$%^&*()-]+)$/";
+    // $pattern = "/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,100}$/";
     if (!empty($password)) {
         if (!preg_match($pattern, $password, $matches)) {
             $data['error-password'] = ERROR_VALID_PASSWORD;
@@ -100,7 +100,7 @@ function checkLengthPassword($password)
     $data = array();
 
     if (!empty($password)) {
-        if (strlen($password) < 3 || strlen($password) > 255) {
+        if (strlen($password) < 6 || strlen($password) > 8) {
             $data['error-password'] = ERROR_LENGTH_PASSWORD;
         }
 

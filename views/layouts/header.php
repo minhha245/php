@@ -15,7 +15,7 @@
     <div id="wrapper">
         <div id="menu">
             <ul id="main-menu">
-                <li>
+                <li class="<?php echo ($_GET['controller']=='admin') ? 'active':''; ?>">
                     <?php
                         if(isset($_SESSION['admin'])) {
 
@@ -23,19 +23,19 @@
                     ?>
                         <span>Admin management</span><i class="fas fa-caret-down"></i>
                              <ul id="sub-menu">
-                                 <li class="nav-item"><a href="index.php?controller=admin&action=search">Search</a></li>
-                                 <li class="nav-item"><a href="index.php?controller=admin&action=create">Create</a></li>
+                                 <li class="nav-item <?php echo ($_GET['controller']=='admin' && $_GET['action']=='search') ? 'active':''; ?>"><a href="index.php?controller=admin&action=search">Search</a></li>
+                                 <li class="nav-item <?php echo ($_GET['controller']=='admin' && $_GET['action']=='create') ? 'active':''; ?>"><a href="index.php?controller=admin&action=create">Create</a></li>
                              </ul>
                         <?php
                             }
                         ?>
                 </li>
-                <li>
+                <li class="<?php echo ($_GET['controller']=='user') ? 'active':''; ?>">
                     <?php
                     ?>
                          <span>User management</span><i class="fas fa-caret-down"></i>
                              <ul id="sub-menu">
-                                 <li class="nav-item"><a href="index.php?controller=user&action=search">Search</a></li>
+                                 <li class="nav-item <?php echo ($_GET['controller']=='user' && $_GET['action']=='search') ? 'active':''; ?>"><a href="index.php?controller=user&action=search">Search</a></li>
                                  <li class="nav-item"><a href="">Create</a></li>
                              </ul>
                     <?php

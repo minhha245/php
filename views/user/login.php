@@ -7,7 +7,7 @@ $fb = new Facebook\Facebook([
 ]);
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // Optional permissions
-$loginUrl = $helper->getLoginUrl('http://localhost/php/index.php?controller=user&action=loginViaFB', $permissions);
+$loginUrl = $helper->getLoginUrl('https://c2d8-14-248-83-33.jp.ngrok.io/php/index.php?controller=user&action=loginViaFB', $permissions);
 ?>
 <DOCTYPE html>
 <html>
@@ -21,6 +21,11 @@ $loginUrl = $helper->getLoginUrl('http://localhost/php/index.php?controller=user
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     </head>
     <body>
+    <?php
+                        if(isset($_SESSION['user']['login'])) {
+                            header("Location: index.php?controller=user&action=detail");
+                        }
+                    ?>
         <div id="login">
             <form method="POST" action="">
                 <h2 style="text-align: center">Login User</h2>
@@ -42,5 +47,6 @@ $loginUrl = $helper->getLoginUrl('http://localhost/php/index.php?controller=user
                 <a href="<?php echo $loginUrl ?>" style="margin-top: 20px; display: block; text-align: center; color: blue;"><i class="fab fa-facebook-square" style="margin-right: 5px; font-size: 25px"></i>Login with Facebook</a>
             </form>
         </div>
+       
     </body>
 </html>

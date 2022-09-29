@@ -15,6 +15,9 @@
     <body>
     <link rel="stylesheet" href="public/css/detail.css">
     <p class="alert-success bg-green"><?php echo isset($_SESSION['user']['loginFB-success']) ? LOGIN_FB_SUCCESSFUL : ""; unset($_SESSION['user']['loginFB-success']); ?></p>
+    <?php
+                        if(isset($_SESSION['user']['login'])) {
+                    ?>
     <title>User - Detail</title>
         <div id="wrapper-detail">
             <div class="form-group row">
@@ -40,7 +43,11 @@
             <a class="btn btn-primary" href="index.php?controller=user&action=logout">Logout</a>
             </div>
         </div>
-
-<?php
+        <?php
     require_once("views/layouts/footer.php") ;
-?>
+        ?>
+        <?php
+                        } else {
+                            header("Location: index.php?controller=user&action=login");
+                        }
+                    ?>

@@ -135,10 +135,10 @@ class AdminController extends BaseController
         if (isset($_POST['reset'])) {
             header("Location: index.php?controller=admin&action=create");
         }
-
+       
         if (isset($_POST['save'])) {
-
-            if ($_FILES['avatar']['name'] == "") {
+            
+            if ($_FILES['avatar']['name']== "") {
                 $data['error-avatar'] = ERROR_EMPTY_AVATAR;
             }
 
@@ -177,9 +177,9 @@ class AdminController extends BaseController
             }
 
             $upload_file = UPLOADS_ADMIN . $_FILES['avatar']['name'];
-
             $ins_id_admin = $this->AdminModel->getIdAdmin($_SESSION['admin']['login']['email']);
-
+            // move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
+            // $_SESSION['admin']['upload'] = $upload_file;
             if (empty($data)) {
                 $arr = array(
                     'avatar' => $_FILES['avatar']['name'],
@@ -190,17 +190,19 @@ class AdminController extends BaseController
                     'ins_id' => $ins_id_admin['id'],
                     'ins_datetime' => date("Y-m-d H:i:s a"),
                 );
+               
                 if ($this->AdminModel->insert($arr)) {
                     move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
                     $_SESSION['admin']['upload'] = $upload_file;
                     $_SESSION['alert']['create-success'] = INSERT_SUCCESSFUL;
-                    header("Location: index.php?controller=admin&action=search");
+                    //unset($_SESSION['admin']['upload']);
                 } else {
                     $_SESSION['alert']['create-fail'] = INSERT_ERROR;
-                    header("Location: index.php?controller=admin&action=search");
                 }
+                header("Location: index.php?controller=admin&action=search");
             }
         }
+      
         $this->render('create', $data);
     }
 
@@ -209,84 +211,87 @@ class AdminController extends BaseController
         $id = $_GET['id'];
         $data = $this->AdminModel->getInfoAdmin($id);
         $error = array();
+        if ($data != null) {
+            if (isset($_POST['save'])) {
+                $avatar = $_FILES['avatar']['name'];
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $confirm_password = $_POST['confirm-password'];
+                $role_type = $_POST['role_type'];
 
-        if (isset($_POST['save'])) {
-            $avatar = $_FILES['avatar']['name'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm-password'];
-            $role_type = $_POST['role_type'];
+                $validImg = validateImg($avatar);
+                $validName = validateName($name);
+                $validEmail = validateEmail($email);
+                $validPass = validatePassword($password);
+                $checkConfirmPass = checkConfirmPassword($password, $confirm_password);
 
-            $validImg = validateImg($avatar);
-            $validName = validateName($name);
-            $validEmail = validateEmail($email);
-            $validPass = validatePassword($password);
-            $checkConfirmPass = checkConfirmPassword($password, $confirm_password);
-
-            if (empty($_POST['email'])) {
-                $error['error-email'] = ERROR_EMPTY_EMAIL;
-            }
-
-            if (empty($_POST['name'])) {
-                $error['error-name'] = ERROR_EMPTY_NAME;
-            }
-
-            if (!empty($avatar)) {
-                $error = array_merge($error, $validImg);
-            } else {
-                $avatar = $data['avatar'];
-            }
-
-            if ($name != $data['name']) {
-                $error = array_merge($error, $validName);
-            }
-
-            if ($email != $data['email']) {
-                if ($this->AdminModel->checkExistsEmailAdmin($email) > 0) {
-                    $error['error-email'] = ERROR_EMAIL_EXISTS;
+                if (empty($_POST['email'])) {
+                    $error['error-email'] = ERROR_EMPTY_EMAIL;
                 }
 
-                $error = array_merge($error, $validEmail);
-            }
+                if (empty($_POST['name'])) {
+                    $error['error-name'] = ERROR_EMPTY_NAME;
+                }
 
-            if (!empty($password)) {
-                $error = array_merge($error, $validPass, $checkConfirmPass);
-            } else {
-                $password = $data['password'];
-            }
-
-            $checkLengthEmail = checkLengthEmail($_POST['email']);
-            $checkLengthName = checkLengthName($_POST['name']);
-            $checkLengthPassword = checkLengthPassword($_POST['password']);
-
-            $error = array_merge($error, $checkLengthEmail, $checkLengthName, $checkLengthPassword);
-
-            if (empty($error)) {
-                $upd_id = $this->AdminModel->getIdAdmin($_SESSION['admin']['login']['email']);
-                $arr = array(
-                    'avatar' => $avatar,
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => md5($password),
-                    'role_type' => $role_type,
-                    'upd_id' => $upd_id['id'],
-                    'upd_datetime' => date("Y-m-d H:i:s a"),
-                );
-
-                $upload_file = UPLOADS_ADMIN . $_FILES['avatar']['name'];
-
-                if ($this->AdminModel->update($arr, "`id` = '{$id}'")) {
-                    move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
-                    $_SESSION['alert']['update-success'] = UPDATE_SUCCESSFUL . " with ID = {$id}";
-                    header("Location: index.php?controller=admin&action=search");
+                if (!empty($avatar)) {
+                    $error = array_merge($error, $validImg);
                 } else {
-                    $_SESSION['alert']['update-fail'] = UPDATE_ERROR . " with ID = {$id}";
-                    header("Location: index.php?controller=admin&action=search");
+                    $avatar = $data['avatar'];
+                }
+
+                if ($name != $data['name']) {
+                    $error = array_merge($error, $validName);
+                }
+
+                if ($email != $data['email']) {
+                    if ($this->AdminModel->checkExistsEmailAdmin($email) > 0) {
+                        $error['error-email'] = ERROR_EMAIL_EXISTS;
+                    }
+
+                    $error = array_merge($error, $validEmail);
+                }
+
+                if (!empty($password)) {
+                    $error = array_merge($error, $validPass, $checkConfirmPass);
+                } else {
+                    $password = $data['password'];
+                }
+
+                $checkLengthEmail = checkLengthEmail($_POST['email']);
+                $checkLengthName = checkLengthName($_POST['name']);
+                $checkLengthPassword = checkLengthPassword($_POST['password']);
+
+                $error = array_merge($error, $checkLengthEmail, $checkLengthName, $checkLengthPassword);
+
+                if (empty($error)) {
+                    $upd_id = $this->AdminModel->getIdAdmin($_SESSION['admin']['login']['email']);
+                    $arr = array(
+                        'avatar' => $avatar,
+                        'name' => $name,
+                        'email' => $email,
+                        'password' => md5($password),
+                        'role_type' => $role_type,
+                        'upd_id' => $upd_id['id'],
+                        'upd_datetime' => date("Y-m-d H:i:s a"),
+                    );
+
+                    $upload_file = UPLOADS_ADMIN . $_FILES['avatar']['name'];
+
+                    if ($this->AdminModel->update($arr, "`id` = '{$id}'")) {
+                        move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
+                        $_SESSION['alert']['update-success'] = UPDATE_SUCCESSFUL . " with ID = {$id}";
+                        header("Location: index.php?controller=admin&action=search");
+                    } else {
+                        $_SESSION['alert']['update-fail'] = UPDATE_ERROR . " with ID = {$id}";
+                    }
                 }
             }
+        } else {
+            $_SESSION['alert']['update-fail'] = UPDATE_ERROR;
+            header("Location: index.php?controller=admin&action=search");
         }
-
+        
         $temp = array(
             'error' => $error,
             'data' => $data,
@@ -298,11 +303,14 @@ class AdminController extends BaseController
     public function delete()
     {
         $id = $_GET['id'];
-
-        if ($this->AdminModel->delete("`id`={$id}")) {
+        $data = $this->AdminModel->getInfoAdmin($id);
+        $result = $this->AdminModel->delete("`id`={$id}");
+        if ($data && $result) {
             $_SESSION['alert']['delete-success'] = DELETE_SUCCESSFUL . " with ID = {$id}";
+
         } else {
             $_SESSION['alert']['delete-fail'] = DELETE_ERROR;
+
         }
 
         header("Location: index.php?controller=admin&action=search");

@@ -18,38 +18,35 @@
                         <label for="avatar" class="col-sm-2 col-form-label">Avatar*</label>
                         <label class="file-upload"><input class="avatar" type="file" name="avatar" value="<?php echo $data['avatar'] ?>" onchange="readURL(this);">File Upload</label>
                         <label class="file-name ml-2"></label>
-                        <?php if(isset($error['error-avatar'])) echo "<p class='error ml-4'>{$error['error-avatar']}</p>"; ?>
+                        
                     </div>
-
+                    
                     <div class="form-group row">
                         <label for="avatar" class="col-sm-2 col-form-label"></label>
                         <img id="upload-file" src="<?php echo UPLOADS_ADMIN.$data['avatar']; ?>">
                     </div>
-
+                    <?php if(isset($error['error-avatar'])) echo "<p class='error'>{$error['error-avatar']}</p>"; ?>
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Name*</label>
                         <input type="text" maxlength="255" class="form-control" id="name" name="name" value="<?php echo $data['name']; ?>">
-                        <?php if(isset($error['error-name'])) echo "<p class='error ml-4'>{$error['error-name']}</p>"; ?>
                     </div>
-
+                    <?php if(isset($error['error-name'])) echo "<p class='error'>{$error['error-name']}</p>"; ?>
                     <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">Email*</label>
                         <input type="text" maxlength="255" class="form-control" id="email" name="email" value="<?php echo $data['email']; ?>">
-                        <?php if(isset($error['error-email'])) echo "<p class='error ml-4'>{$error['error-email']}</p>"; ?>
                     </div>
-
+                    <?php if(isset($error['error-email'])) echo "<p class='error'>{$error['error-email']}</p>"; ?>
                     <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" value="">
-                        <?php if(isset($error['error-password'])) echo "<p class='error ml-4'>{$error['error-password']}</p>"; ?>
                     </div>
-
+                    <?php if(isset($error['error-password'])) echo "<p class='error'>{$error['error-password']}</p>"; ?>
                     <div class="form-group row">
                         <label for="confirm-password" class="col-sm-2 col-form-label">Password Verify</label>
                         <input type="password" name="confirm-password" class="form-control" id="confirm-password" value="">
-                        <?php if(isset($error['error-confirm-password'])) echo "<p class='error ml-4'>{$error['error-confirm-password']}</p>"; ?>
+                 
                     </div>
-
+                    <?php if(isset($error['error-confirm-password'])) echo "<p class='error'>{$error['error-confirm-password']}</p>"; ?>
                     <div class="form-group row">
                         <label for="role" class="col-sm-2 col-form-label">Role*</label>
                         <div class="form-check-inline">

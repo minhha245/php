@@ -21,82 +21,87 @@ class UserController extends BaseController
         $id = $_GET['id'];
         $data = $this->UserModel->getInfoUserByID($id);
         $error = array();
+        if ($data != null) {
+            if (isset($_POST['save'])) {
+                $avatar = $_FILES['avatar']['name'];
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $confirm_password = $_POST['confirm-password'];
+                $status = $_POST['status'];
+                $validImg = validateImg($avatar);
+                $validName = validateName($name);
+                $validEmail = validateEmail($email);
+                $validPass = validatePassword($password);
+                $checkConfirmPass = checkConfirmPassword($password, $confirm_password);
 
-        if (isset($_POST['save'])) {
-            $avatar = $_FILES['avatar']['name'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm-password'];
-            $status = $_POST['status'];
-            $validImg = validateImg($avatar);
-            $validName = validateName($name);
-            $validEmail = validateEmail($email);
-            $validPass = validatePassword($password);
-            $checkConfirmPass = checkConfirmPassword($password, $confirm_password);
-
-            if (empty($_POST['email'])) {
-                $error['error-email'] = ERROR_EMPTY_EMAIL;
-            }
-
-            if (empty($_POST['name'])) {
-                $error['error-name'] = ERROR_EMPTY_NAME;
-            }
-
-            if (!empty($avatar)) {
-                $error = array_merge($error, $validImg);
-            } else {
-                $avatar = $data['avatar'];
-            }
-
-            if ($name != $data['name']) {
-                $error = array_merge($error, $validName);
-            }
-
-            if ($email != $data['email']) {
-                if ($this->UserModel->checkExistsEmailUser($email) > 0) {
-                    $error['error-email'] = ERROR_EMAIL_EXISTS;
+                if (empty($_POST['email'])) {
+                    $error['error-email'] = ERROR_EMPTY_EMAIL;
                 }
 
-                $error = array_merge($error, $validEmail);
-            }
+                if (empty($_POST['name'])) {
+                    $error['error-name'] = ERROR_EMPTY_NAME;
+                }
 
-            if (!empty($password)) {
-                $error = array_merge($error, $validPass, $checkConfirmPass);
-            } else {
-                $password = $data['password'];
-            }
-
-            $checkLengthEmail = checkLengthEmail($_POST['email']);
-            $checkLengthName = checkLengthName($_POST['name']);
-            $checkLengthPassword = checkLengthPassword($_POST['password']);
-
-            $error = array_merge($error, $checkLengthEmail, $checkLengthName, $checkLengthPassword);
-
-            if (empty($error)) {
-                $upd_id_user = $this->UserModel->getInfoAdminByEmail($_SESSION['admin']['login']['email']);
-                $arr = array(
-                    'avatar' => $avatar,
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => md5($password),
-                    'status' => $status,
-                    'upd_id' => $upd_id_user['id'],
-                    'upd_datetime' => date("Y-m-d H:i:s a"),
-                );
-
-                $upload_file = UPLOADS_USER . $_FILES['avatar']['name'];
-
-                if ($this->UserModel->update($arr, "`id` = '{$id}'")) {
-                    move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
-                    $_SESSION['alert']['update-success'] = UPDATE_SUCCESSFUL . " with ID = {$id}";
-                    header("Location: index.php?controller=user&action=search");
+                if (!empty($avatar)) {
+                    $error = array_merge($error, $validImg);
                 } else {
-                    $_SESSION['alert']['update-fail'] = UPDATE_ERROR;
+                    $avatar = $data['avatar'];
+                }
+
+                if ($name != $data['name']) {
+                    $error = array_merge($error, $validName);
+                }
+
+                if ($email != $data['email']) {
+                    if ($this->UserModel->checkExistsEmailUser($email) > 0) {
+                        $error['error-email'] = ERROR_EMAIL_EXISTS;
+                    }
+
+                    $error = array_merge($error, $validEmail);
+                }
+
+                if (!empty($password)) {
+                    $error = array_merge($error, $validPass, $checkConfirmPass);
+                } else {
+                    $password = $data['password'];
+                }
+
+                $checkLengthEmail = checkLengthEmail($_POST['email']);
+                $checkLengthName = checkLengthName($_POST['name']);
+                $checkLengthPassword = checkLengthPassword($_POST['password']);
+
+                $error = array_merge($error, $checkLengthEmail, $checkLengthName, $checkLengthPassword);
+
+                if (empty($error)) {
+                    $upd_id_user = $this->UserModel->getInfoAdminByEmail($_SESSION['admin']['login']['email']);
+                    $arr = array(
+                        'avatar' => $avatar,
+                        'name' => $name,
+                        'email' => $email,
+                        'password' => md5($password),
+                        'status' => $status,
+                        'upd_id' => $upd_id_user['id'],
+                        'upd_datetime' => date("Y-m-d H:i:s a"),
+                    );
+
+                    $upload_file = UPLOADS_USER . $_FILES['avatar']['name'];
+
+                    if ($this->UserModel->update($arr, "`id` = '{$id}'")) {
+                        move_uploaded_file($_FILES['avatar']['tmp_name'], $upload_file);
+                        $_SESSION['alert']['update-success'] = UPDATE_SUCCESSFUL . " with ID = {$id}";
+                        header("Location: index.php?controller=user&action=search");
+                    } else {
+                        $_SESSION['alert']['update-fail'] = UPDATE_ERROR;
+                    }
+                   
                 }
             }
+        } else {
+            $_SESSION['alert']['update-fail'] = UPDATE_ERROR;
+            header("Location: index.php?controller=user&action=search");
         }
-
+       
         $temp = array(
             'error' => $error,
             'data' => $data,
@@ -108,10 +113,12 @@ class UserController extends BaseController
     public function delete()
     {
         $id = $_GET['id'];
-        if ($this->UserModel->delete("`id`={$id}")) {
+        $data = $this->UserModel->getInfoUserByID($id);
+        $result = $this->UserModel->delete("`id`={$id}");
+        if ($data && $result) {
             $_SESSION['alert']['delete-success'] = DELETE_SUCCESSFUL . " with ID = {$id}";
         } else {
-            $_SESSION['alert']['delete-fail'] = DELETE_ERROR . " with ID = {$id}";
+            $_SESSION['alert']['delete-fail'] = DELETE_ERROR;
         }
 
         header("Location: index.php?controller=user&action=search");
@@ -175,12 +182,12 @@ class UserController extends BaseController
             $response = $fb->get('/me?fields=id,name,email,picture', $accessToken);
         } catch (Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage();
+            // echo 'Graph returned an error: ' . $e->getMessage();
             exit;
         } catch (Facebook\Exceptions\FacebookSDKException $e) {
             // When validation fails or other local issues
             // echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            header("Location: index.php?controller=user&action=login");
+             header("Location: index.php?controller=user&action=detail");
 
             exit;
         }
@@ -227,7 +234,7 @@ class UserController extends BaseController
             );
             $this->UserModel->insert($data);
         }
-
+        $_SESSION['user']['login'] = $data;
         $_SESSION['user']['loginFB-success'] = LOGIN_FB_SUCCESSFUL;
 
         $this->render("detail", $data);

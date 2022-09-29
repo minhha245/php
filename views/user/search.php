@@ -31,18 +31,36 @@ require_once("views/layouts/header.php") ;
 
     <!--Data Table-->
     <div id="data_table">
-        <?php
-        if(isset($_SESSION['alert']['update-success'])){echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-success'].'</p>';} else{ echo ""; }
-        if(isset($_SESSION['alert']['delete-success'])){echo '<p class="alert-success bg-green">'.$_SESSION['alert']['delete-success'].'</p>';} else{ echo ""; }
-        unset($_SESSION['alert']);
-        ?>
+    <?php
+                    if(isset($_SESSION['alert']['update-success'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-success'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    if(isset($_SESSION['alert']['update-fail'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['update-fail'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    if(isset($_SESSION['alert']['delete-success'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['delete-success'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    if(isset($_SESSION['alert']['delete-fail'])) {
+                        echo '<p class="alert-success bg-green">'.$_SESSION['alert']['delete-fail'].'</p>';
+                    } else {
+                         echo ""; 
+                    }
+                    unset($_SESSION['alert']);
+                ?>
         <table class="table table-striped table-hover table-condensed">
             <tr>
-                <th>ID<a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=id&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
+                <th><a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=id&sort=' . $sort; ?>">ID <i class="fas fa-sort"></i></a></th>
                 <th>Avatar</th>
-                <th>Name<a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=name&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
-                <th>Email<a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=email&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
-                <th>Status<a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=status&sort=' . $sort; ?>"> <i class="fas fa-sort"></i></a></th>
+                <th><a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=name&sort=' . $sort; ?>">Name <i class="fas fa-sort"></i></a></th>
+                <th><a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=email&sort=' . $sort; ?>">Email <i class="fas fa-sort"></i></a></th>
+                <th><a href="index.php?controller=user&action=search<?php echo $add_url_search . '&column=status&sort=' . $sort; ?>">Status <i class="fas fa-sort"></i></a></th>
                 <th>Action</th>
             </tr>
             <tr>
@@ -54,7 +72,8 @@ require_once("views/layouts/header.php") ;
                 <td><img src="<?php echo UPLOADS_USER . $value['avatar']; ?>"></td>
                 <td><?php echo $value['name'] ?></td>
                 <td><?php echo $value['email'] ?></td>
-                <td><?php echo $value['status'] ?></td>
+               
+                <td><?php echo($value['status']==STATUS_BANNER) ? 'Banned':'Active';?></td>
                 <td>
                     <span class="btn btn-success"><a href="index.php?controller=user&action=edit&id=<?php echo $value['id']?>">Edit</a></span>
                     <span class="btn btn-danger"><a href="index.php?controller=user&action=delete&id=<?php echo $value['id']?>" onclick="return confirm('Are you sure?')";>Delete</a></span>

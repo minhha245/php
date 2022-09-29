@@ -32,7 +32,7 @@ class UserModel extends BaseModel
     public function getInfoUserByID($id)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT * FROM `{$this->tableName}` WHERE `id` = '{$id}'");
+        $arr = $db->query("SELECT * FROM `{$this->tableName}` WHERE `id` = '{$id}' AND `del_flag` =" . DEL_FLAG_0);
         return $arr->fetch();
     }
 

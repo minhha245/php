@@ -18,7 +18,7 @@ class AdminModel extends BaseModel
     public function getInfoAdmin($id)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT * FROM `{$this->tableName}` WHERE `id` = '{$id}'");
+        $arr = $db->query("SELECT * FROM `{$this->tableName}` WHERE `id` = '{$id}' AND `del_flag` =" . DEL_FLAG_0);
 
         return $arr->fetch();
     }
@@ -34,7 +34,7 @@ class AdminModel extends BaseModel
     public function getIdAdmin($str)
     {
         $db = DB::getInstance();
-        $arr = $db->query("SELECT `id` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}'");
+        $arr = $db->query("SELECT `id` FROM `{$this->tableName}` WHERE `email` LIKE '{$str}' AND `del_flag` =" . DEL_FLAG_0);
 
         return $arr->fetch();
     }
